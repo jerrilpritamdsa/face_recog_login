@@ -9,7 +9,7 @@ class UserProfile(models.Model):
     city=models.CharField(max_length=20,default="")
     phone=models.IntegerField(default=0)
     head_shot=models.ImageField(upload_to='profile_images',blank=True)
-    
+    login_time=models.DateTimeField(auto_now_add=True, null=True)
     
     class Meta:
         ordering = ["user"]
