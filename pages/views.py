@@ -94,6 +94,7 @@ def home(request):
 
 def logout_request(request):
     logout(request)
+    del request.session['uid']
     return render(request,'registration/logout.html')
 
 def index(request):
