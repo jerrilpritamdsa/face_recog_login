@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from .forms import LoginForm,Registrationform
 from django.contrib.auth import authenticate, login
 import os
+from .models import UserProfile
 import datetime
 from django.contrib.auth import logout
 from PIL import Image
@@ -56,7 +57,7 @@ def facedect(loc):
                         return False    
 
 def about(request):
-    return render(request,"about.html",{})
+    return render(request,"about.html",context)
 
 def base(request):
         if request.method =="POST":
@@ -79,7 +80,9 @@ def base(request):
                 return render(request,"base.html",{"MyLoginForm": MyLoginForm})  
 
 def home(request):
-   return render(request, 'home.html', {})
+    user=UserProfile.objects.all()
+    context={'user':user}
+    return render(request, 'home.html', context)
 
 #from django.contrib.auth.forms import UserCreationForm
 

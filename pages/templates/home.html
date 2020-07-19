@@ -16,12 +16,12 @@
 					<th>Employee</th>
 					<th>Login</th>
 				</tr>
-				
+				{% for use in user %}
 					<tr>
-						<td>{{ user.username }}</td>					
-						<td>{{ user.userprofile.login_time }}</td>
+						<td>{{ use.user }}</td>					
+						<td>{{ use.login_time }}</td>
 					</tr>
-				
+				{% endfor %}
 			</table>
 	
   

@@ -17,8 +17,7 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
     
-    def __str__(self):
-        return self.login_time
+    
 
 
 def create_profile(sender,**kwargs):
