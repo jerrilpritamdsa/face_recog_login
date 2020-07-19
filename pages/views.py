@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from .forms import LoginForm,Registrationform
 from django.contrib.auth import authenticate, login
 import os
+from django.contrib.auth import logout
 from PIL import Image
 from django.urls import path, include
 import face_recognition
@@ -81,8 +82,7 @@ def home(request):
 
 def logout_request(request):
     logout(request)
-    messages.info(request, "Logged out successfully!")
-    return redirect("/")
+    return render(request,'registration/logout.html')
 
 def index(request):
     return render(request,"index.html",{})
