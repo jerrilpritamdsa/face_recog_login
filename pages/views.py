@@ -72,8 +72,8 @@ def base(request):
                                 print(user.userprofile.head_shot.url)
                                 if facedect(user.userprofile.head_shot.url):
                                         login(request,user)
-                                        val=str(user)
-                                        
+                                        request.session['uid']=username
+                                        val=str(user)                                       
                                         var1=UserProfile.objects.get(user=User.objects.get(username=val).id)
                                         print(var1)
                                         mon=var1.logtimes_set.create(login_time=datetime.datetime.now())
@@ -97,8 +97,10 @@ def logout_request(request):
     return render(request,'registration/logout.html')
 
 def index(request):
-    return render(request,"index.html",{})
-
+    if request.session.has_key('uid'):
+        return render(request,"index.html",{})
+    else:
+        return redirect('base')
 
 def register(request):
         if request.method =="POST":
