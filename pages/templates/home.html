@@ -10,6 +10,19 @@
 <div style="width:100%;text-align:center">
         <p ><h1>Welcome</h1></p>
     </div>     
+	<table class="table table-sm">
+				<tr>
+
+					<th>Employee</th>
+					<th>Login</th>
+				</tr>
+				
+					<tr>
+						<td>{{ user.username }}</td>					
+						<td>{{ user.userprofile.login_time }}</td>
+					</tr>
+				
+			</table>
 	
   
 {% endblock %} 

@@ -13,6 +13,7 @@
 
        {% if user.is_authenticated %}
         <p ><h1>welcome : {{ user.username }}</h1></p>
+		<p><h3>login time : {{ user.userprofile.login_time }}</h3></p>
         {% else %}
         <p ><h1>unauthorised access</h1></p>
         {% endif %}

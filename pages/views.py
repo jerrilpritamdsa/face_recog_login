@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from .forms import LoginForm,Registrationform
 from django.contrib.auth import authenticate, login
 import os
+import datetime
 from django.contrib.auth import logout
 from PIL import Image
 from django.urls import path, include
@@ -68,6 +69,8 @@ def base(request):
                                 print(user.userprofile.head_shot.url)
                                 if facedect(user.userprofile.head_shot.url):
                                         login(request,user)
+                                        user.userprofile.login_time=datetime.datetime.now()
+                                        user.userprofile.save()
                                 return redirect('index')
                         else:
                                 return redirect('index')        

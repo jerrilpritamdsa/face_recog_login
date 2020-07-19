@@ -10,12 +10,16 @@ class UserProfile(models.Model):
     phone=models.IntegerField(default=0)
     head_shot=models.ImageField(upload_to='profile_images',blank=True)
     login_time=models.DateTimeField(auto_now_add=True, null=True)
-    
+    logout_time=models.DateTimeField(auto_now_add=True, null=True)
     class Meta:
         ordering = ["user"]
 
     def __str__(self):
         return self.user.username
+    
+    def __str__(self):
+        return self.login_time
+
 
 def create_profile(sender,**kwargs):
     if kwargs['created']:
