@@ -3,7 +3,8 @@ from django.http import HttpResponseRedirect
 from .forms import LoginForm,Registrationform
 from django.contrib.auth import authenticate, login
 import os
-from .models import UserProfile
+from django.contrib.auth.models import User
+from .models import UserProfile, LogTimes
 import datetime
 from django.contrib.auth import logout
 from PIL import Image
@@ -66,12 +67,17 @@ def base(request):
                         username=request.POST['email']
                         password=request.POST['password']
                         user = authenticate(request,username=username,password=password)
+                        
                         if user is not None:
                                 print(user.userprofile.head_shot.url)
                                 if facedect(user.userprofile.head_shot.url):
                                         login(request,user)
-                                        user.userprofile.login_time=datetime.datetime.now()
-                                        user.userprofile.save()
+                                        val=str(user)
+                                        
+                                        var1=UserProfile.objects.get(user=User.objects.get(username=val).id)
+                                        print(var1)
+                                        mon=var1.logtimes_set.create(login_time=datetime.datetime.now())
+                                        mon.save()
                                 return redirect('index')
                         else:
                                 return redirect('index')        
@@ -80,7 +86,7 @@ def base(request):
                 return render(request,"base.html",{"MyLoginForm": MyLoginForm})  
 
 def home(request):
-    user=UserProfile.objects.all()
+    user=LogTimes.objects.all()
     context={'user':user}
     return render(request, 'home.html', context)
 

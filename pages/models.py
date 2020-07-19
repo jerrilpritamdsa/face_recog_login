@@ -9,8 +9,8 @@ class UserProfile(models.Model):
     city=models.CharField(max_length=20,default="")
     phone=models.IntegerField(default=0)
     head_shot=models.ImageField(upload_to='profile_images',blank=True)
-    login_time=models.DateTimeField(auto_now_add=True, null=True)
-    logout_time=models.DateTimeField(auto_now_add=True, null=True)
+    
+    
     class Meta:
         ordering = ["user"]
 
@@ -18,8 +18,18 @@ class UserProfile(models.Model):
         return self.user.username
     
     
-
-
+class LogTimes(models.Model):
+    login_time=models.DateTimeField(auto_now_add=True, null=True)
+    logout_time=models.DateTimeField(auto_now_add=True, null=True)
+    user=models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    
+    class Meta:
+        ordering = ["user"]
+        
+    def __str__(self):
+        return self.user.user.username
+    
+    
 def create_profile(sender,**kwargs):
     if kwargs['created']:
         user_profile=UserProfile.objects.get_or_create(user=kwargs['instance'])
