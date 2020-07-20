@@ -11,6 +11,7 @@ from PIL import Image
 from django.urls import path, include
 import face_recognition
 import cv2 
+from django.contrib.sessions.models import Session
 
 def facedect(loc):
         cam = cv2.VideoCapture(0)
@@ -61,6 +62,8 @@ def about(request):
     return render(request,"about.html",context)
 
 def base(request):
+        if request.session.has_key('uid'):
+            return redirect('index')
         if request.method =="POST":
                 form =LoginForm(request.POST)
                 if form.is_valid():
@@ -72,7 +75,7 @@ def base(request):
                                 print(user.userprofile.head_shot.url)
                                 if facedect(user.userprofile.head_shot.url):
                                         login(request,user)
-                                        request.session['uid']=username
+                                        request.session['uid']=True
                                         val=str(user)                                       
                                         var1=UserProfile.objects.get(user=User.objects.get(username=val).id)
                                         print(var1)
@@ -94,7 +97,9 @@ def home(request):
 
 def logout_request(request):
     logout(request)
-    del request.session['uid']
+    if 'uid' in request.session:
+        del request.session['uid']
+    
     return render(request,'registration/logout.html')
 
 def index(request):
